@@ -23,7 +23,7 @@ int main(int argc, char *argv[]){
   Node *root;
   ContigDescr *cd;
 
-  version = "0.4";
+  version = "0.5";
   setprogname2("formatPro");
   args = getArgs(argc, argv);
   fileName = (char *)emalloc(256*sizeof(char));

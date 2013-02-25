@@ -14,11 +14,12 @@ Args *args;
 
 Args *getArgs(int argc, char *argv[]){
   char c;
-  char *optString = "hvn:rb:";
+  char *optString = "hvn:rb:c:";
 
   args = (Args *)emalloc(sizeof(Args));
   args->n = DEFAULT_N;
   args->b = DEFAULT_B;
+  args->c = DEFAULT_C;
   args->r = 0;
   args->h = 0;
   args->v = 0;
@@ -32,6 +33,9 @@ Args *getArgs(int argc, char *argv[]){
       break;
     case 'b':                           /* buffer size */
       args->b = atoi(optarg);
+      break;
+    case 'c':                           /* minimum coverage */
+      args->c = atoi(optarg);
       break;
     case 'n':                           /* name of output files */
       args->n = optarg;
@@ -63,6 +67,7 @@ void printUsage(char *version){
   printf("Options:\n");
   printf("\t[-n <FileName>; default: %s]\n",DEFAULT_N);
   printf("\t[-b <NUM> buffer size; default: %d]\n",DEFAULT_B);
+  printf("\t[-c <NUM> minimum coverage; default: %d]\n",DEFAULT_C);
   printf("\t[-r create only profiles file; default: profiles, contigs, and positions]\n");
   printf("\t[-h print this help message and exit]\n");
   printf("\t[-v print program information and exit]\n");

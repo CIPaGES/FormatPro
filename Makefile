@@ -1,13 +1,13 @@
 CC=gcc
 CFLAGS= -O3 -Wall -Wshadow -pedantic -D_GNU_SOURCE -D_FILE_OFFSET_BITS=64 -DVER32 \
--I/opt/local/include/ -I../../Lib/Include -L/opt/local/lib/   -L../../Lib/ # -g #-m64
+-I/opt/local/include/ -I../../Lib/Include -L/opt/local/lib/   -L../../Lib/  -g #-m64
 # The source files, object files, libraries and executable name.
 SRCFILES= formatPro.c profileTree.c interface.c eprintf.c
 OBJFILES= formatPro.o profileTree.o interface.o eprintf.o
 LIBS= -lm
 EXECFILE=formatPro
 DIRECTORY=FormatPro
-VERSION=0.4
+VERSION=0.5
 # The make rule for the executable
 .PHONY : all
 all : $(EXECFILE)

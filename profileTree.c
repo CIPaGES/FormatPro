@@ -36,6 +36,13 @@ Node *writePositions(int fd, FILE *indF, Node *root, ContigDescr *contigDescr, A
 
   node = (Node *)emalloc(sizeof(Node));
   node->key = (char *)emalloc(256*sizeof(char));
+  node->c2 = 0;
+  node->n = 0;
+  node->id = 0;
+  for(i=0;i<4;i++){
+    node->profile1[i] = 0;
+    node->profile2[i] = 0;
+  }
   node->left = NULL;
   node->right = NULL;
   maxNumInd = 100000;
@@ -76,15 +83,17 @@ Node *writePositions(int fd, FILE *indF, Node *root, ContigDescr *contigDescr, A
 	  node->profile1[j] = atoi(profileStr[j]);
 	  strcat(node->key,profileStr[j]);
 	  node->c1 += node->profile1[j];
-	  numPos++;
-	  contigDescr->len[contigDescr->n-1]++;
-	  root = addTree(root,node->key,1,node,NULL);
-	  position.pro = foundNodeIndex;
-	  posArray[numInd++] = position;
-	  if(numInd == maxNumInd){
-	    numWritten = fwrite(posArray,sizeof(Position),numInd,indF);
-	    assert(numWritten == numInd);
-	    numInd = 0;
+	  if(node->c1 >= args->c){
+	    numPos++;
+	    contigDescr->len[contigDescr->n-1]++;
+	    root = addTree(root,node->key,1,node,NULL);
+	    position.pro = foundNodeIndex;
+	    posArray[numInd++] = position;
+	    if(numInd == maxNumInd){
+	      numWritten = fwrite(posArray,sizeof(Position),numInd,indF);
+	      assert(numWritten == numInd);
+	      numInd = 0;
+	    }
 	  }
 	}
       }
@@ -139,6 +148,7 @@ void writeContigs(ContigDescr *cd, Args *args){
   fwrite(cd->len,sizeof(int),cd->n,contF);
   printf("#Contig lengths written to %s\n",fileName);
   free(fileName);
+  fclose(contF);
 }
 
 void setContigDescr(ContigDescr *contigDescr){
